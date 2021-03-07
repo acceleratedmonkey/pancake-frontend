@@ -3,7 +3,7 @@ import { Route, useRouteMatch, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Image, Heading, RowType, Toggle, Text } from '@pancakeswap-libs/uikit'
+import { Image, Heading, RowType, Toggle, Text } from 'uikit'
 import styled from 'styled-components'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
@@ -227,11 +227,11 @@ const Farms: React.FC = () => {
 
   const isActive = !pathname.includes('history')
   let farmsStaked = []
-  if (isActive) {
-    farmsStaked = stackedOnly ? farmsList(stackedOnlyFarms) : farmsList(activeFarms)
-  } else {
-    farmsStaked = farmsList(inactiveFarms)
-  }
+  // if (isActive) {
+  //   farmsStaked = stackedOnly ? farmsList(stackedOnlyFarms) : farmsList(activeFarms)
+  // } else {
+  //   farmsStaked = farmsList(inactiveFarms)
+  // }
 
   farmsStaked = sortFarms(farmsStaked)
 
@@ -397,7 +397,6 @@ const Farms: React.FC = () => {
           </FilterContainer>
         </ControlContainer>
         {renderContent()}
-        <StyledImage src="/images/3dpan.png" alt="Pancake illustration" width={120} height={103} />
       </Page>
     </>
   )
