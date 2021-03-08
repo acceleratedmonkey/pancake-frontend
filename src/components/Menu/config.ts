@@ -7,20 +7,6 @@ const config: MenuEntry[] = [
     href: '/',
   },
   {
-    label: 'Trade',
-    icon: 'TradeIcon',
-    items: [
-      {
-        label: 'Exchange',
-        href: 'https://exchange.pancakeswap.finance',
-      },
-      {
-        label: 'Liquidity',
-        href: 'https://exchange.pancakeswap.finance/#/pool',
-      },
-    ],
-  },
-  {
     label: 'Farms',
     icon: 'FarmIcon',
     href: '/farms',
