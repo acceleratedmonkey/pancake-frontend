@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
-import { useFarms, usePriceBnbBusd, usePriceCakeBusd, usePriceEthBusd } from 'state/hooks'
+import { useFarms, usePriceBnbBusd, usePriceStaxBusd, usePriceEthBusd } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
@@ -114,7 +114,7 @@ const Farms: React.FC = () => {
   const { pathname } = useLocation()
   const TranslateString = useI18n()
   const farmsLP = useFarms()
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceStaxBusd()
   const bnbPrice = usePriceBnbBusd()
   const [query, setQuery] = useState('')
   const [viewMode, setViewMode] = useState(ViewMode.TABLE)
@@ -132,9 +132,8 @@ const Farms: React.FC = () => {
 
   const [stackedOnly, setStackedOnly] = useState(false)
 
-  const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X')
-  const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X')
-
+  const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X').filter((farm) => !farm.hide)
+  const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X').filter((farm) => !farm.hide)
   const tableRef = useRef(null)
 
   const stackedOnlyFarms = activeFarms.filter(
@@ -227,11 +226,11 @@ const Farms: React.FC = () => {
 
   const isActive = !pathname.includes('history')
   let farmsStaked = []
-  // if (isActive) {
-  //   farmsStaked = stackedOnly ? farmsList(stackedOnlyFarms) : farmsList(activeFarms)
-  // } else {
-  //   farmsStaked = farmsList(inactiveFarms)
-  // }
+  if (isActive) {
+    farmsStaked = stackedOnly ? farmsList(stackedOnlyFarms) : farmsList(activeFarms)
+  } else {
+    farmsStaked = farmsList(inactiveFarms)
+  }
 
   farmsStaked = sortFarms(farmsStaked)
 
